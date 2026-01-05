@@ -55,6 +55,14 @@ int main(){
 				if(move(cursor_y, cursor_x-1) == OK){
 					delch();
 				}
+				break;
+			//Attribs
+			case KEY_F(1):
+				attrset(A_NORMAL);
+				break;
+			case KEY_F(2):
+				attrset(A_REVERSE);
+				break;
 
 			//Typing
 			case EOF:
