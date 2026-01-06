@@ -4,4 +4,4 @@ OUT=D
 
 main: ./src/main.c
 	mkdir -p ./build
-	$(CC) ./src/*.c -o ./build/$(OUT) $(LIBS)
+	$(CC) ./src/*.c -lncurses -o ./build/$(OUT) $(LIBS)
