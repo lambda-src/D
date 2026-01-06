@@ -1,7 +1,7 @@
 CC=gcc
-LIBS=
+LIBS=-lncurses
 OUT=D
 
 main: ./src/main.c
 	mkdir -p ./build
-	$(CC) ./src/*.c -lncurses -o ./build/$(OUT) $(LIBS)
+	$(CC) ./src/*.c $(LIBS) -o ./build/$(OUT) $(LIBS)
