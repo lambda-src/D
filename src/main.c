@@ -1,17 +1,15 @@
+#include "editor.h"
 #include <stdio.h>
 #include <stdint.h>
 #include <ncurses.h>
 
 int32_t main(int32_t argc, uint8_t *argv[]){
-  	int32_t ch;
-  	initscr();
-  	noecho();
-  	cbreak();
-  	printw("Press crtl+c to exit ...\n\n");
-  	for (;;) {
-    	ch = getch();
-    	printw("Value of %c is: %d\n", ch, ch);
-  	}
-  	endwin();
+	Editor editor = INIT_EDITOR;
+	editor_start();
+	editor_loop(&editor);
+	// Disable raw mode and clear screen 
+	// TODO The terminal is still fucked after window ends 
+	endwin();
+	printf("\033c");
   	return 0;
 }
