@@ -6,7 +6,7 @@
 #define INIT_EDITOR ((Editor){ \
     .kb_buffer = EOF, \ 
     .cur = (Cursor){.x = 0, .y = 0}, \
-    .win = initscr() \
+    .win = initscr(), \
     .ed_buffer = init_editor_buffer() \
 })
 
