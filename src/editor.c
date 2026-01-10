@@ -2,12 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-// This will prob need to be reworked since ncurses fucks the terminal 
-void panic(const uint8_t *err) {
-    fprintf(stderr, "%s\n", err);
-    exit(EXIT_FAILURE);
-}
-
 void editor_start() {
 	raw();
 	cbreak;
@@ -116,3 +110,4 @@ void editor_buffer_remove(EditorBuffer *buff, size_t index) {
     );
     buff->len--;
 }
+
