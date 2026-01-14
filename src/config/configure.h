@@ -1,10 +1,7 @@
 #pragma once 
 
+#include "toml.h"
 #include <stdint.h>
-
-void grab_envs(); // Grabs important Enviroment Variables
-
-int8_t *find_config_file(); // Finds where the config file is
 
 // Some configurable stuff you can do in ncurses
 // This will all need to be parsed from a toml file then ran in
@@ -61,8 +58,14 @@ typedef enum {
 typedef struct {
     CursorAppearnce cursor_appearnce;
     TextColor text_color;
-    TextStyle text_style; 
+    TextStyle *text_style; 
     BackgroundColor background_color;
     // idk if this should be a bunch of flags or an array of settings lets just change it later if need3
     EditorSettings *editor_settings;
 } Config;
+
+void grab_envs(); // Grabs important Enviroment Variables
+
+int8_t *find_config_file(); // Finds where the config file is
+
+Config *get_config(TomlTable *toml_tables);

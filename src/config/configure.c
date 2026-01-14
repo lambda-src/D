@@ -7,6 +7,8 @@
  *
  * Created 1/8/26 
  * */
+#include "configure.h"
+#include "util.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
@@ -55,15 +57,27 @@ int8_t *find_config_file(){ //Returns path to config file
 	return config_path;
 }
 
+Config *get_config(TomlTable *toml_tables) {
+	Config *config = malloc(sizeof(Config));
+	size_t table_count = 0;
+	size_t i = 0;
 
-//Testing Code
-/*
-int main(){
-	grab_envs();
-	int8_t *config_file = find_config_file();
-	if(config_file != NULL){
-		printf("Found: %s\n", config_file);
+	if (config == NULL)
+		panic("Allocation error");
+
+	// Get the number of tables 
+	while (toml_tables[i].name[0] != '\0') table_count++;
+
+	for (size_t i = 0; i < table_count; i++) {
+		if (strncmp(toml_tables[table_count].name, "cursor", 7)) {
+			// Parse cursor table 
+		} else if (strncmp(toml_tables[table_count].name, "text", 5)) {
+			// Parse text table
+		} else if (strncmp(toml_tables[table_count].name, "editor", 7)) {
+			// Parse the editor table 
+		}
 	}
-	return 0;
+
+	free_toml(toml_tables);
+	return (Config *)NULL;
 }
-*/
