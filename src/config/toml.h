@@ -28,7 +28,7 @@ display_as_hex = true
 #define MAX_PAIRS 3
 
 // This is the number of configurable things that we got 
-#define CONFIGURABLE_ITEMS 5
+#define CONFIGURABLE_TABLES 3
 
 typedef enum {
     Bool,
@@ -61,6 +61,9 @@ uint8_t *read_toml(uint8_t *path);
 
 // Parse the toml into tables
 TomlTable *parse_toml(uint8_t *toml_str);
+
+// Read the toml str and advance the toml ptr
+uint8_t *read_toml_str(uint8_t *toml_str);
 
 // Frees all the allocated memory from parse toml
 void free_toml(TomlTable *toml_tables);

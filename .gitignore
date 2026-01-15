@@ -1,2 +1,9 @@
+# dont include this
 build/
+
+# idk if this is still needed
 src/a.out
+
+# only keep files that end in hs in the scripts folder
+scripts/*
+!scripts/*.hs

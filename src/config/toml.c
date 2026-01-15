@@ -25,7 +25,7 @@ uint8_t *read_toml(uint8_t *path) {
 
 // This needs to be reworked holy moly
 TomlTable *parse_toml(uint8_t *toml_str) {
-    TomlTable *tables = calloc(CONFIGURABLE_ITEMS, sizeof(TomlTable));
+    TomlTable *tables = calloc(CONFIGURABLE_TABLES, sizeof(TomlTable));
     uint8_t *toml_ptr = toml_str;
     TomlTable *curr_table = NULL;
     size_t table_count = 0;
@@ -101,20 +101,7 @@ TomlTable *parse_toml(uint8_t *toml_str) {
                 toml_ptr += 5;
             } else if (*toml_ptr == '"') {
                 toml_ptr++;
-                uint8_t *key_str = malloc(16);
-                size_t j = 0;
-
-                if (key_str == NULL) 
-                    panic("Allocation error");
-
-                while (*toml_ptr && *toml_ptr != '"')
-                    key_str[j++] = *toml_ptr++;
-
-                if (*toml_ptr != '"')
-                    panic("String has no edning quote");
-
-                toml_ptr++;
-                key_str[j] = '\0';
+                uint8_t *key_str = read_toml_str(toml_ptr);
 
                 pair->type = String;
                 pair->val.string = key_str;
@@ -134,21 +121,7 @@ TomlTable *parse_toml(uint8_t *toml_str) {
                     if (*toml_ptr != '"')
                         panic("Expected a string ");
 
-                    toml_ptr++;
-                    uint8_t *str_buff = malloc(16);
-                    size_t j = 0;
-
-                    if (str_buff == NULL)
-                        panic("Allocation error");
-
-                    while (*toml_ptr && *toml_ptr != '"')
-                        str_buff[j++] = *toml_ptr++;
-
-                    if (*toml_ptr != '"')
-                        panic("String has no ending quote");
-
-                    toml_ptr++;
-                    str_buff[j] = '\0';
+                    uint8_t *str_buff = read_toml_str(toml_ptr);
 
                     pair->val.arr_string[str_count++] = str_buff;
 
@@ -158,10 +131,8 @@ TomlTable *parse_toml(uint8_t *toml_str) {
                         SKIP_WS(toml_ptr);
                     }
                 }
-
                 if (*toml_ptr != ']')
                     panic("Array has no closing bracket");
-
                 toml_ptr++;
             } else panic("Unknown value type");
             continue;
@@ -171,6 +142,30 @@ TomlTable *parse_toml(uint8_t *toml_str) {
     return tables;
 }
 
+uint8_t *read_toml_str(uint8_t *toml_str) {
+    uint8_t *buff = malloc(16);
+    size_t i = 0; 
+
+    if (buff == NULL)
+        panic("Allocation failure");
+
+    while (*toml_str && *toml_str != '"')
+        buff[i++] = *toml_str++;
+    
+    if (*toml_str != '"')
+        panic("String has no ending quote");
+
+    toml_str++;
+    buff[i] = '\0';
+
+    return buff;
+}
+
 void free_toml(TomlTable *toml_tables) {
-    // TODO
+    size_t table_count = 0;
+    while (toml_tables->name[0] != '\0') table_count++;
+
+    for (size_t i = 0; i < table_count; i++) {
+        // TODO
+    }
 }

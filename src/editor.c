@@ -110,4 +110,3 @@ void editor_buffer_remove(EditorBuffer *buff, size_t index) {
     );
     buff->len--;
 }
-
